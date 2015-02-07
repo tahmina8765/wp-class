@@ -14,7 +14,7 @@ function cmb2_sample_metaboxes( array $meta_boxes ) {
     /**
      * Sample metabox to demonstrate each field type included
      */
-    $meta_boxes['test_metabox'] = array(
+    $meta_boxes[] = array(
         'id'            => 'test_metabox',
         'title'         => __( 'Test Metabox', 'cmb2' ),
         'object_types'  => array( 'page', 'post' ), // Post type
@@ -54,7 +54,7 @@ function cmb2_sample_metaboxes( array $meta_boxes ) {
     );
 
 
-    $meta_boxes['movies_metabox'] = array(
+    $meta_boxes[] = array(
         'id'            => 'movies_metabox',
         'title'         => __( 'Movie Metabox', 'cmb2' ),
         'object_types'  => array( 'movies' ), // Post type
@@ -79,6 +79,64 @@ function cmb2_sample_metaboxes( array $meta_boxes ) {
                 'name'       => __( 'Released Date', 'cmb2' ),
                 'id'         => $prefix . 'text',
                 'type'       => 'text_date',
+            ),
+            array(
+                'name'       => __( 'Poster2', 'cmb2' ),
+                'id'         => $prefix . 'text',
+                'type'       => 'file',
+            ),
+            array(
+                'name'       => __( 'Gallery', 'cmb2' ),
+                'id'         => $prefix . 'text',
+                'type'       => 'file_list',
+            ),
+        ),
+    );
+
+    $meta_boxes[] = array(
+        'id'            => 'aboutus_metabox',
+        'title'         => __( 'About Us Metabox', 'cmb2' ),
+        'object_types'  => array( 'movies' ), // Post type
+        'context'       => 'normal',
+        'priority'      => 'high',
+        'show_names'    => true, // Show field names on the left
+        // 'cmb_styles' => false, // false to disable the CMB stylesheet
+        // 'closed'     => true, // Keep the metabox closed by default
+        'fields'        => array(
+            array(
+                'name'       => __( 'Is Featured', 'cmb2' ),
+                'id'         => $prefix . 'text',
+                'type'       => 'checkbox',
+            ),
+
+        ),
+    );
+
+    $options[0] = '--Select--';
+    $option_posts = get_posts();
+    if($option_posts){
+        foreach ( $option_posts as $row ) {
+            $options[$row->ID] = $row->post_title;
+        }
+    }
+    $meta_boxes[] = array(
+        'id'            => 'postselect_metabox',
+        'title'         => __( 'Select Post Metabox', 'cmb2' ),
+        'object_types'  => array( 'movies' ), // Post type
+        'context'       => 'normal',
+        'priority'      => 'high',
+        'show_names'    => true, // Show field names on the left
+        // 'cmb_styles' => false, // false to disable the CMB stylesheet
+        // 'closed'     => true, // Keep the metabox closed by default
+        'fields'        => array(
+            array(
+                'name'       => __( 'Posts', 'cmb2' ),
+                'desc'    => 'Select an post',
+                'id'         => $prefix . 'post_select',
+                'type'    => 'select',
+                'options' => $options,
+                'default' => 'custom',
+                'repeatable'      => true,
             ),
         ),
     );

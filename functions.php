@@ -311,3 +311,42 @@ if(!class_exists('cmb2_bootstrap_201')){
 
 }
 require "libs/CMB2/metaboxes.php";
+
+if ( ! class_exists( 'TitanFrameworkEmbedder' ) ) {
+	require "libs/titan/titan-framework-embedder.php";
+}
+
+function titan_metabox(){
+	$titan = TitanFramework::getInstance("tm2");
+	$mb1 =  $titan->createMetaBox(array(
+		'name' => 'Additional Post Options',
+		'post_type' => array( 'page', 'post' ),
+
+	));
+
+	$mb1->createOption(array(
+		'id' => 'name',
+		'name' => 'My titan text box',
+		'type' => 'text'
+	));
+
+	$mb1->createOption( array(
+		'name' => 'Heading Font',
+		'id' => 'my_heading_font',
+		'type' => 'select-googlefont',
+		'default' => array(
+			'name' => 'Exo',
+			'variants' => array( '400', 'italic' ),
+			'subsets' => array( 'latin-ext' )
+		),
+		'css' => 'h1, h2, h3, h4, h5, h6 { font-family: value; }',
+	) );
+
+	$mb2 =  $titan->createAdminPanel(array(
+		'name' => 'Additional Post Options',
+		'post_type' => array( 'page', 'post' ),
+
+	));
+}
+
+add_action("tf_create_options", "titan_metabox");
